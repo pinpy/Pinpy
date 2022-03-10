@@ -1,7 +1,9 @@
+from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 
 from notes.views import page_not_found
+from pinpy import settings
 
 '''Указываем файл со списком url из приложения notes
 (для независимости приложений).  
@@ -11,7 +13,11 @@ urlpatterns = [
     path('', include('notes.urls')),
 ]
 
-# Присвоение функции обработки исключения ошибке 404.
+# Передача загруженных файлов приложению в процессе отладки.
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+# Присваение функции обработки исключения ошибки 404.
 handler404 = page_not_found
 
 # handler400 – невозможно обработать запрос.

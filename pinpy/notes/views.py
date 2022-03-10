@@ -1,10 +1,46 @@
 from django.http import HttpResponse, HttpResponseNotFound
 from django.shortcuts import render
 
+# from .models import *
+
+# Список для главного меню сайта.
+menu = [{'title': "О сайте", 'url_name': 'about'},
+        {'title': "Обратная связь", 'url_name': 'contact'},
+        {'title': "Поддержать проект", 'url_name': 'support'},
+        {'title': "Войти", 'url_name': 'sign_in'},
+        {'title': "Зарегистрироваться", 'url_name': 'sign_up'},
+        ]
+
 
 # Главная страница.
 def home(request):
-    return HttpResponse('<h1>Главная страница</h1>')
+    # Обработка шаблона главной страницы.
+    return render(request, 'notes/home.html', {'menu': menu, 'title': 'Главная страница'})
+
+
+# О сайте.
+def about(request):
+    return render(request, 'notes/about.html', {'menu': menu, 'title': 'О сайте'})
+
+
+# Обратная связь.
+def contact(request):
+    return render(request, 'notes/contact.html', {'menu': menu, 'title': 'Обратная связь'})
+
+
+# Поддержать проект.
+def support(request):
+    return render(request, 'notes/support.html', {'menu': menu, 'title': 'Поддержать проект'})
+
+
+# Войти.
+def sign_in(request):
+    return HttpResponse('<h1>Войти</h1>')
+
+
+# Зарегистрироваться.
+def sign_up(request):
+    return HttpResponse('<h1>Зарегистрироваться</h1>')
 
 
 # Обработка исключения 404.
