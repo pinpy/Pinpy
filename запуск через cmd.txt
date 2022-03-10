@@ -1,0 +1,22 @@
+!!!Создаёшь папку с проектом!!!
+mkdir Pinpy-master
+!!!Заходишь в папку с проектом!!!
+cd Pinpy-master
+!!!Создаешь виртуально окружение!!!
+python3 -m venv myvenv - "myvenv" название окружения 
+!!!Запускаешь виртуальное окружение!!!
+C:\Users\Name\Pinpy-master> myvenv\Scripts\activate
+
+*Дальше уже устанавливаешь Django*
+!!!Обновляешь pip!!!
+python3 -m pip install --upgrade pip
+
+Дальше в папке Pinpy-master создаёшь requirements.txt и пиши там Django~=3.2.10
+Дальше с помощью команды "pip install -r requirements.txt" устанавливаешь Django
+
+-Как запустить проект?
+-Вот так: 
+	(myvenv) ~/Pinpy-master$ python manage.py runserver
+	перед запуском нужно перейти в папку с manage.py
+Проверяешь сервер:
+	http://127.0.0.1:8000/
