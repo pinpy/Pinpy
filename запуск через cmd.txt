@@ -11,8 +11,7 @@ C:\Users\Name\Pinpy-master> myvenv\Scripts\activate
 !!!Обновляешь pip!!!
 python3 -m pip install --upgrade pip
 
-Дальше в папке Pinpy-master создаёшь requirements.txt и пиши там Django~=3.2.10
-Дальше с помощью команды "pip install -r requirements.txt" устанавливаешь Django
+Дальше с помощью команды "pip install django" устанавливаешь Django
 
 -Как запустить проект?
 -Вот так: 
