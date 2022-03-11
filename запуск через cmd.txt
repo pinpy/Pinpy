@@ -2,7 +2,7 @@
 mkdir Pinpy-master
 !!!Заходишь в папку с проектом!!!
 cd Pinpy-master
-!!!Создаешь виртуально окружение!!!
+!!!Создаешь виртуальное окружение!!!
 python3 -m venv myvenv - "myvenv" название окружения 
 !!!Запускаешь виртуальное окружение!!!
 C:\Users\Name\Pinpy-master> myvenv\Scripts\activate
