@@ -28,9 +28,9 @@ def contact(request):
     return render(request, 'notes/contact.html', {'menu': menu, 'title': 'Обратная связь'})
 
 
-# Поддержать проект.
+# Поддержать нас.
 def support(request):
-    return render(request, 'notes/support.html', {'menu': menu, 'title': 'Поддержать проект'})
+    return render(request, 'notes/support.html', {'menu': menu, 'title': 'Поддержать нас'})
 
 
 # Войти.
