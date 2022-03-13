@@ -75,9 +75,9 @@
         </a>
 
         <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-          <li><a href="contacts/" class="nav-link px-2 text-white">Контакты</a></li>
-          <li><a href="support_us/" class="nav-link px-2 text-white">Поддержать нас</a></li>
-          <li><a href="about/" class="nav-link px-2 text-white">О сайте</a></li>
+          <li><a href="/contacts/" class="nav-link px-2 text-white">Контакты</a></li>
+          <li><a href="/support_us/" class="nav-link px-2 text-white">Поддержать нас</a></li>
+          <li><a href="/about/" class="nav-link px-2 text-white">О сайте</a></li>
         </ul>
         {% if request.user.is_authenticated %}
           <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
@@ -97,8 +97,8 @@
           </div>
         {% else %}
           <div class="text-end">
-            <button type="button" class="btn btn-outline-light me-2">Login</button>
-            <button type="button" class="btn btn-warning">Sign-up</button>
+            <button type="button" class="btn btn-outline-light me-2" onclick="document.location='#'">Войти</button>
+            <button type="button" class="btn btn-warning" onclick="document.location='#'">Зарегистрироваться</button>
           </div>
         {% endif %}
       </div>
