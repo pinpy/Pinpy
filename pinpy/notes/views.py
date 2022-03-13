@@ -18,18 +18,23 @@ def home(request):
     return render(request, 'notes/home.html', {'menu': menu, 'title': 'Главная страница'})
 
 
+# Оснавная страница.
+def main(request):
+    return render(request, 'notes/main.html', {'menu': menu, 'title': 'Pinpy'})
+
+
 # О сайте.
 def about(request):
     return render(request, 'notes/about.html', {'menu': menu, 'title': 'О сайте'})
 
 
-# Обратная связь.
-def contact(request):
-    return render(request, 'notes/contact.html', {'menu': menu, 'title': 'Обратная связь'})
+# Контакты.
+def contacts(request):
+    return render(request, 'notes/contact.html', {'menu': menu, 'title': 'Контакты'})
 
 
 # Поддержать нас.
-def support(request):
+def support_us(request):
     return render(request, 'notes/support.html', {'menu': menu, 'title': 'Поддержать нас'})
 
 

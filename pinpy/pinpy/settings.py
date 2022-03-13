@@ -100,7 +100,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')  # путь к общей статической папке, используемой реальным веб-сервером.
-STATIC_URL = 'static/'  # Префикс URL-адреса для статических файлов.
+STATIC_URL = '/static/'  # Префикс URL-адреса для статических файлов.
 STATICFILES_DIRS = []  # Cписок дополнительных путей к статическим файлам, используемых для сбора и для режима отладки.
 
 # Default primary key field type
