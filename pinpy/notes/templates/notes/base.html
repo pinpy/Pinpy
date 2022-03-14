@@ -2,7 +2,7 @@
 <!-- Подключение статических файлов. -->
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html>
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -10,13 +10,14 @@
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Hugo 0.88.1">
     <title>{{ title }}</title>
+    <link type="image/x-icon" href="{% static 'notes/images/Logo.svg' %}" rel="shortcut icon"/>
 
     <link rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/headers/">
 
 
 
     <!-- Bootstrap core CSS -->
-<link type="text/css" href="{% static 'notes/css/bootstrap.min.css' %}" rel="stylesheet" />
+<link type="text/css" href="{% static 'notes/css/styles.css' %}" rel="stylesheet" />
 
     <style>
       .bd-placeholder-img {
@@ -36,7 +37,7 @@
 
 
     <!-- Custom styles for this template -->
-    <link type="text/css" href="{% static 'notes/css/styles.css' %}" rel="stylesheet" />
+    <link type="text/css" href="{% static 'notes/css/base.css' %}" rel="stylesheet" />
   </head>
   <body>
 
@@ -71,7 +72,7 @@
     <div class="container">
       <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
         <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
-          <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"/></svg>
+          <img src="{% static 'notes/images/Logo.svg' %}" alt="Logo" width="41" height="41">
         </a>
 
         <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
@@ -97,8 +98,8 @@
           </div>
         {% else %}
           <div class="text-end">
-            <button type="button" class="btn btn-outline-light me-2" onclick="document.location='#'">Войти</button>
-            <button type="button" class="btn btn-warning" onclick="document.location='#'">Зарегистрироваться</button>
+            <button type="button" class="btn btn-outline-light me-2" onclick="document.location='/sign_in/'">Войти</button>
+            <button type="button" class="btn btn-warning" onclick="document.location='/sign_up/'">Зарегистрироваться</button>
           </div>
         {% endif %}
       </div>
@@ -106,7 +107,7 @@
   </header>
 </main>
 
-    <script src="{% static 'notes/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'notes/js/styles.js' %}"></script>
 
 <!--
 {% block mainmenu %}

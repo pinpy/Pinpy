@@ -40,12 +40,12 @@ def support_us(request):
 
 # Войти.
 def sign_in(request):
-    return HttpResponse('<h1>Войти</h1>')
+    return render(request, 'notes/sign_in.html', {'menu': menu, 'title': 'Войти'})
 
 
 # Зарегистрироваться.
 def sign_up(request):
-    return HttpResponse('<h1>Зарегистрироваться</h1>')
+    return render(request, 'notes/sign_up.html', {'menu': menu, 'title': 'Зарегистрироваться'})
 
 
 # Обработка исключения 404.
