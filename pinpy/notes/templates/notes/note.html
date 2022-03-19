@@ -1,0 +1,14 @@
+<!-- Страница для просмотра заметок. -->
+{% extends 'notes/base.html' %}
+
+{% block content %}
+
+<h1>{{ note.title }}</h1>
+
+{% if note.photo %}
+<p><img class="img-article-left" src="{{note.photo.url}}"></p>
+{% endif %}
+
+{{note.content|linebreaks}}
+
+{% endblock %}
