@@ -6,15 +6,15 @@ from unidecode import unidecode
 
 
 class Notes(models.Model):
-    title = models.CharField(max_length=255, verbose_name='Заголовок')
-    slug = models.SlugField(blank=True, max_length=255, db_index=True, verbose_name='URL')  # Понятная человеку URL.
+    title = models.CharField(max_length=127, verbose_name='Заголовок')
+    slug = models.SlugField(blank=True, max_length=127, db_index=True, verbose_name='URL')  # Понятная человеку URL.
     content = models.TextField(blank=True, verbose_name='Содержимое')
     photo = models.ImageField(blank=True, upload_to='photos/%y/%m/%d', verbose_name='Фото')
     time_create = models.DateTimeField(auto_now_add=True, verbose_name='Время создания')
     time_update = models.DateTimeField(auto_now=True, verbose_name='Время изменения')
-    is_published = models.BooleanField(default=True, verbose_name='Публикация')
     factory_id = models.UUIDField(default=uuid.uuid4)  # uuid - уникальный идентификатор (чтобы ссылки не совпадали).
 
+    # is_published = models.BooleanField(default=True, verbose_name='Публикация')
     # author = models.ForeignKey(User, on_delete=models.CASCADE, default=None, blank=True)
 
     # Выводит title при запросе к элементам бд.
@@ -23,7 +23,7 @@ class Notes(models.Model):
 
     # Используется модулями django по умолчанию для построения ссылок.
     def get_absolute_url(self):
-        return reverse('note', kwargs={'note_slug': self.slug, 'factory_id': self.factory_id})
+        return reverse('note', kwargs={'slug': self.slug, 'factory_id': self.factory_id})
 
     # slug заполняется автоматически, если запись не была создана (нету id), инче slug остается прежним.
     def save(self, *args, **kwargs):

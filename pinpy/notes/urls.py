@@ -3,13 +3,13 @@ from django.urls import path
 from .views import *
 
 urlpatterns = [
-    path('', home, name='home'),  # Главная страница.
-    path('contacts/', contacts, name='contact'),  # Контакты.
-    path('support_us/', support_us, name='support_us'),  # Поддержать нас.
-    path('about/', about, name='about'),  # О сайте.
-    path('sign_in/', sign_in, name='sign_in'),  # Войти.
-    path('sign_up/', sign_up, name='sign_up'),  # Зарегистрироваться.
-    path('main/', main, name='main'),  # Основная страница.
-    path('add_note/', add_note, name='add_note'),  # Добавить заметку (временно).
-    path('note/<slug:note_slug>/<uuid:factory_id>/', show_note, name='note'),
+    path('', Home.as_view(), name='home'),  # Главная страница.
+    path('contacts/', Contacts.as_view(), name='contact'),  # Контакты.
+    path('support_us/', SupportUs.as_view(), name='support_us'),  # Поддержать нас.
+    path('about/', About.as_view(), name='about'),  # О сайте.
+    path('sign_in/', SignIn.as_view(), name='sign_in'),  # Войти.
+    path('sign_up/', SignUp.as_view(), name='sign_up'),  # Зарегистрироваться.
+    path('main/', Main.as_view(), name='main'),  # Основная страница.
+    path('add_note/', AddNote.as_view(), name='add_note'),  # Добавить заметку (временно).
+    path('note/<slug:slug>/<uuid:factory_id>/', ShowNote.as_view(), name='note'),
 ]
