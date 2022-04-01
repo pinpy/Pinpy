@@ -1,19 +1,95 @@
-from django.http import HttpResponse, HttpResponseNotFound
+from django.conf import settings
+from django.contrib import auth
+from django.contrib.auth import logout, authenticate, login
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.views import LoginView
+from django.core.checks import messages
+from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
+
+from pinpy.settings import SESSION_COOKIE_AGE
 from .forms import *
 from .models import *
-from django.urls import reverse_lazy
+from .utils import Mixin
+from django.urls import reverse_lazy  # Формирование маршрута по его имени.
 from django.views.generic import ListView, DetailView, CreateView
 
 
 # Главная страница.
-class Home(ListView):
+class Home(Mixin, ListView):  # Родительские классы обрабатываются по порядку записи.
     model = Notes  # Атрибут model связывает представление с моделью Notes.
     template_name = 'notes/home.html'
 
     def get_context_data(self, *, object_list=None, **kwargs):  # Передает шаблону статические файлы.
+        context = super().get_context_data(**kwargs)  # context ссылается на словарь, где сохраняются данные.
+        context['title'] = 'Pinpy'  # В методе класса Mixin указавается параметр title.
+        return context  # Объединение словарей.
+
+
+# Добавить заметку.
+class AddNote(LoginRequiredMixin, CreateView):  # Ограничение доступа к странице для неавторизованных пользователей.
+    form_class = AddNoteForm  # Атрибут form_class связывает представление с классом формы AddPostForm.
+    template_name = 'notes/add_note.html'
+    context_object_name = 'form'  # Указываем имя, по которому будут доступны данные из модели.
+    success_url = reverse_lazy('home')  # Перенаправляет на указанную ссылку при добавлении записи.
+
+    # login_url = reverse_lazy('sign_in')  # Перенаправляет на указанную ссылку незарегистрированного пользователя.
+
+    def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = 'Главная страница'  # context ссылается на словарь, где сохраняются данные.
+        context['title'] = 'Добавить заметку'
+        return context
+
+
+# Зарегистрироваться.
+class SignUp(CreateView):
+    form_class = SignUpForm
+    template_name = 'notes/sign_up.html'
+    context_object_name = 'form'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Регистрация'
+        return context
+
+    # Метод вызывается при успешной отправке данных формы (POSTed).
+    def form_valid(self, form):
+        user = form.save()  # Добавление пользователя в БД.
+        login(self.request, user)  # Вход в систему.
+        return redirect('home')
+
+
+# Войти.
+class SignIn(LoginView):
+    form_class = SignInForm
+    template_name = 'notes/sign_in.html'
+    context_object_name = 'form'
+    no_cookies = False
+    account_disabled = False
+    invalid_login = False
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Войти'
+        return context
+
+    def form_valid(self, form):
+        remember_me = form.cleaned_data['remember_me']  # get remember me data from cleaned_data of form
+        if not remember_me:
+            self.request.session.set_expiry(0)  # if remember me is
+        return super().form_valid(form)
+
+
+# Посмотреть заметку.
+class ShowNote(DetailView):
+    model = Notes
+    template_name = 'notes/note.html'
+    context_object_name = 'note'
+    allow_empty = False  # Генерация исключения 404, если заметок нет.
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = self.request.user.get_username() + '/' + str(context['note'])  # "Имя пользователя/заметка".
         return context
 
 
@@ -61,51 +137,21 @@ class SupportUs(ListView):
         return context
 
 
-# Войти.
-class SignIn(ListView):
-    model = Notes
-    template_name = 'notes/sign_in.html'
+# Выход
+def logout_user(request):
+    logout(request)
+    return redirect('home')
+
+
+# Профиль.
+class Profile(DetailView):
+    model = User
+    template_name = 'notes/profile.html'
+    slug_field = "username"
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = 'Войти'
-        return context
-
-
-# Зарегистрироваться.
-class SignUp(ListView):
-    model = Notes
-    template_name = 'notes/sign_up.html'
-
-    def get_context_data(self, *, object_list=None, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['title'] = 'Зарегистрироваться'
-        return context
-
-
-# Добавить заметку.
-class AddNote(CreateView):
-    form_class = AddNoteForm  # Атрибут form_class связывает представление с классом формы AddPostForm.
-    template_name = 'notes/add_note.html'
-    context_object_name = 'form'  # Указываем имя, по которому будут доступны данные из модели.
-    success_url = reverse_lazy('home')  # Перенаправляет на указанную ссылку при добавлении записи.
-
-    def get_context_data(self, *, object_list=None, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['title'] = 'Добавить заметку'
-        return context
-
-
-# Посмотреть заметку.
-class ShowNote(DetailView):
-    model = Notes
-    template_name = 'notes/note.html'
-    context_object_name = 'note'
-    allow_empty = False  # Генерация исключения 404, если заметок нет.
-
-    def get_context_data(self, *, object_list=None, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['title'] = context['note']
+        context['title'] = self.request.user.get_username()
         return context
 
 

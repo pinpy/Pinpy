@@ -1,4 +1,6 @@
 import uuid
+
+from django.contrib.auth.models import User
 from django.db import models
 from django.template.defaultfilters import slugify
 from django.urls import reverse
@@ -7,6 +9,7 @@ from unidecode import unidecode
 
 class Notes(models.Model):
     title = models.CharField(max_length=127, verbose_name='Заголовок')
+    # username = models.CharField(max_length=127, verbose_name='Имя пользователя')
     slug = models.SlugField(blank=True, max_length=127, db_index=True, verbose_name='URL')  # Понятная человеку URL.
     content = models.TextField(blank=True, verbose_name='Содержимое')
     photo = models.ImageField(blank=True, upload_to='photos/%y/%m/%d', verbose_name='Фото')

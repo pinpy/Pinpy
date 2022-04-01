@@ -24,6 +24,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'debug_toolbar',
     'notes.apps.NotesConfig',
 ]
 
@@ -35,6 +36,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'pinpy.urls'
@@ -110,3 +112,20 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  # Загрузка графических файлов.
 MEDIA_URL = 'media/'  # Формирование пути к графическим файлам.
+
+LOGIN_REDIRECT_URL = '/'  # Перенаправляет на указанную ссылку при авторизации.
+
+INTERNAL_IPS = [
+    '127.0.0.1'
+]
+
+SESSION_COOKIE_AGE = 60 * 60 * 24 * 30
+
+'''
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+        'LOCATION': os.path.join(BASE_DIR, 'pinpy_cache'),
+    }
+}
+'''

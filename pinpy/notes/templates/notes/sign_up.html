@@ -1,19 +1,18 @@
 <!-- Шаблон страницы регистрации. -->
 {% load static %}
+{% load notes_tags %}
 
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
+    <meta name="application-name" content="Pinpy">
+    <meta name="description" content="Сайт для сохранения заметок, написанный с помощью фреймворка Django.">
+    <meta name="keywords" content="Django, Python, HTML, CSS, JS, Bootstrap, notes, site, сайт, заметки, записи">
+    <meta name="author" content="Aslan Pshukov">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
-    <meta name="generator" content="Hugo 0.88.1">
     <title>{{ title }}</title>
     <link type="image/x-icon" href="{% static 'notes/images/Logo1.svg' %}" rel="shortcut icon"/>
-
-    <link rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/modals/">
-
 
 
     <!-- Bootstrap core CSS -->
@@ -33,6 +32,11 @@
           font-size: 3.5rem;
         }
       }
+      .form-error ul {
+        list-style: none;
+        padding: 0;
+        color: #CC0000;
+      }
     </style>
 
 
@@ -40,27 +44,31 @@
     <link type="text/css" href="{% static 'notes/css/sign_up.css' %}" rel="stylesheet" />
   </head>
   <body>
+
 <div class="modal modal-signin position-static d-block bg-secondary py-5" tabindex="-1" role="dialog" id="modalSignin">
   <div class="modal-dialog" role="document">
     <div class="modal-content rounded-5 shadow">
       <div class="modal-header p-5 pb-4 border-bottom-0">
         <!-- <h5 class="modal-title">Modal title</h5> -->
-        <h2 class="fw-bold mb-0">Sign up for free</h2>
+        <h2 class="fw-bold mb-0">Регистрация</h2>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
 
       <div class="modal-body p-5 pt-0">
-        <form class="">
+        <form action="{% url 'sign_up' %}" method="post">
+          {% csrf_token %}
+
+          <div class="form-error">{{ form.non_field_errors }}</div>
+
+          {% for f in form %}
           <div class="form-floating mb-3">
-            <input type="email" class="form-control rounded-4" id="floatingInput" placeholder="name@example.com">
-            <label for="floatingInput">Email address</label>
+            {{ f }}
+            <label for="{{ f.id_for_label }}">{{f.label}}: </label>
+            <div class="form-error">{{ f.errors }}</div>
           </div>
-          <div class="form-floating mb-3">
-            <input type="password" class="form-control rounded-4" id="floatingPassword" placeholder="Password">
-            <label for="floatingPassword">Password</label>
-          </div>
-          <button class="w-100 mb-2 btn btn-lg rounded-4 btn-primary" type="submit">Sign up</button>
-          <small class="text-muted">By clicking Sign up, you agree to the terms of use.</small>
+          {% endfor %}
+        <button class="w-100 mb-2 btn btn-lg rounded-4 btn-primary" type="submit">Зарегистрироваться</button>
+          <small class="text-muted">Нажимая Зарегистрироваться, вы принимаете пользовательское соглашение и политику конфиденциальности.</small>
           <hr class="my-4">
           <h2 class="fs-5 fw-bold mb-3">Or use a third-party</h2>
           <button class="w-100 py-2 mb-2 btn btn-outline-dark rounded-4" type="submit">
@@ -81,7 +89,7 @@
   </div>
 </div>
 
-    <script src="{% static 'notes/js/styles.js' %}"></script>
+    <!-- <script src="{% static 'notes/js/styles.js' %}"></script> -->
 
   </body>
 </html>
