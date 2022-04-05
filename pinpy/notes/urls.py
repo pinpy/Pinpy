@@ -4,7 +4,7 @@ from .views import *
 
 urlpatterns = [
     path('', Home.as_view(), name='home'),  # Главная страница.
-    path('contacts/', Contacts.as_view(), name='contact'),  # Контакты.
+    path('feedback/', Feedback.as_view(), name='feedback'),  # Обратная связь.
     path('support_us/', SupportUs.as_view(), name='support_us'),  # Поддержать нас.
     path('about/', About.as_view(), name='about'),  # О сайте.
     path('sign_in/', SignIn.as_view(), name='sign_in'),  # Войти.

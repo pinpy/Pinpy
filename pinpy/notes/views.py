@@ -1,18 +1,15 @@
-from django.conf import settings
-from django.contrib import auth
-from django.contrib.auth import logout, authenticate, login
+from django.contrib.auth import logout, login
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.models import User
 from django.contrib.auth.views import LoginView
-from django.core.checks import messages
-from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
-from django.shortcuts import render, redirect, get_object_or_404
+from django.http import HttpResponseNotFound
+from django.shortcuts import redirect
 
-from pinpy.settings import SESSION_COOKIE_AGE
 from .forms import *
 from .models import *
 from .utils import Mixin
 from django.urls import reverse_lazy  # Формирование маршрута по его имени.
-from django.views.generic import ListView, DetailView, CreateView
+from django.views.generic import ListView, DetailView, CreateView, FormView
 
 
 # Главная страница.
@@ -115,15 +112,20 @@ class About(ListView):
         return context
 
 
-# Контакты.
-class Contacts(ListView):
-    model = Notes
-    template_name = 'notes/contact.html'
+# Обратная связь.
+class Feedback(FormView):
+    form_class = FeedbackForm
+    template_name = 'notes/feedback.html'
+    success_url = reverse_lazy('home')
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = 'Контакты'
+        context['title'] = 'Обратная связь'
         return context
+
+    def form_valid(self, form):
+        print(form.cleaned_data)
+        return redirect('home')
 
 
 # Поддержать нас.

@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
+from captcha.fields import CaptchaField
 
 from .models import *
 
@@ -43,3 +44,9 @@ class SignInForm(AuthenticationForm):
         attrs={'class': 'form-control', 'placeholder': 'Введите пароль'}))
     remember_me = forms.BooleanField(required=False)  # CheckboxInput.
 
+
+class FeedbackForm(forms.Form):
+    name = forms.CharField(label='Имя', max_length=255, widget=forms.TextInput(attrs={'class': 'form-control'}))
+    email = forms.EmailField(label='Email', widget=forms.EmailInput(attrs={'class': 'form-control'}))
+    content = forms.CharField(label='Сообщение', widget=forms.Textarea(attrs={'class': 'form-control'}))
+    captcha = CaptchaField()

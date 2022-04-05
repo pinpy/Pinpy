@@ -1,0 +1,30 @@
+<!-- Шаблон страницы "Обратная связь". -->
+{% extends 'notes/base.html' %}
+
+{% block content %}
+
+<h1>{{title}}</h1>
+<div class="modal-body p-5 pt-0">
+<form method="post">
+    {% csrf_token %}
+
+    <div class="form-error">{{ form.non_field_errors }}</div>
+
+    {% for f in form %}
+    {% if f != captcha %}
+    <div class="form-floating mb-3">
+        {{ f }}
+        <label for="{{ f.id_for_label }}">{{f.label}}: </label>
+        <div class="form-error">{{ f.errors }}</div>
+    </div>
+    {% else %}
+    <p><label class="form-label" for="{{ f.id_for_label }}">{{f.label}}: </label>{{ f }}</p>
+    <div class="form-error">{{ f.errors }}</div>
+    {% endif %}
+    {% endfor %}
+
+    <button type="submit">Отправить</button>
+
+</form>
+</div>
+{% endblock %}

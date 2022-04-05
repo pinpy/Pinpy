@@ -11,6 +11,7 @@ from pinpy import settings
 urlpatterns = [
     path('admin/', admin.site.urls, name='admin'),
     path('', include('notes.urls')),
+    path('captcha/', include('captcha.urls')),
 ]
 
 # Передача загруженных файлов приложению в процессе отладки.
